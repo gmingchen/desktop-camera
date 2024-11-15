@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "iconfont";
+  src: url('./fonts/iconfont.woff2') format('woff2'),
+      url('./fonts//iconfont.woff') format('woff'),
+      url('./fonts/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-camera:before {
+  content: "\e6c8";
+}
+
+.icon-size-amplify:before {
+  content: "\e6be";
+}
+
+.icon-stop-camera:before {
+  content: "\e6bf";
+}
+
+.icon-ratio-reduce:before {
+  content: "\e6c0";
+}
+
+.icon-size-reduce:before {
+  content: "\e6c1";
+}
+
+.icon-hexagon:before {
+  content: "\e6c2";
+}
+
+.icon-ratio-amplify:before {
+  content: "\e6c3";
+}
+
+.icon-circle:before {
+  content: "\e6c4";
+}
+
+.icon-quadrilateral:before {
+  content: "\e6c5";
+}
+
+.icon-heptagon:before {
+  content: "\e6c6";
+}
+
+.icon-pentagon:before {
+  content: "\e6c7";
+}

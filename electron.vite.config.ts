@@ -10,10 +10,13 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    base: './',
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src'),
-        '@store': resolve('src/renderer/src/store/modules')
+        '@store': resolve('src/renderer/src/store/modules'),
+        '@components': resolve('src/renderer/src/components')
+        // '@store': resolve('src/renderer/src/store/modules'),
       }
     },
     plugins: [vue()]

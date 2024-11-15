@@ -25,12 +25,14 @@
     "@electron-toolkit/utils": "^3.0.0",
     "electron-updater": "^6.1.7",
     "pinia": "^2.2.6",
+    "scss": "^0.2.4",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
     "@electron-toolkit/eslint-config-ts": "^2.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@electron/remote": "^2.1.2",
     "@rushstack/eslint-patch": "^1.10.3",
     "@types/node": "^20.14.8",
     "@vitejs/plugin-vue": "^5.0.5",
@@ -42,6 +44,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.26.0",
     "prettier": "^3.3.2",
+    "sass-embedded": "^1.80.6",
     "typescript": "^5.5.2",
     "vite": "^5.3.1",
     "vue": "^3.4.30",

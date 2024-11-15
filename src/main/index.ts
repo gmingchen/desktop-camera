@@ -1,19 +1,33 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, globalShortcut } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+const size = 200
+const minSize = 150
+const maxSize = 600
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: size,
+    height: size,
+    minWidth: minSize,
+    minHeight: minSize,
+    maxWidth: maxSize,
+    maxHeight: maxSize,
     show: false,
+    frame: false,
     autoHideMenuBar: true,
+    transparent: true,
+    alwaysOnTop: true,
+    resizable: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 
@@ -33,6 +47,38 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  // globalShortcut.register('Alt+CommandOrControl+Shift+D', () => {
+  // mainWindow.webContents.openDevTools({ mode: 'detach' }) //开启开发者工具
+  // })
+
+  const shortcuts = [
+    'Alt+CommandOrControl+Shift+Q', // 放大比例
+    'Alt+CommandOrControl+Shift+W', // 缩小比例
+    'Alt+CommandOrControl+Shift+A', // 反向切换形状
+    'Alt+CommandOrControl+Shift+S' // 正向切换形状
+  ]
+  shortcuts.forEach((shortcut) => {
+    globalShortcut.register(shortcut, () => {
+      mainWindow.webContents.send(shortcut)
+    })
+  })
+
+  const speed = 10
+  // 放大窗口
+  globalShortcut.register('Alt+CommandOrControl+Shift+Z', () => {
+    const [width, height] = mainWindow.getContentSize()
+    if (width + speed <= maxSize) {
+      mainWindow.setSize(width + speed, height + speed)
+    }
+  })
+  // 缩小窗口
+  globalShortcut.register('Alt+CommandOrControl+Shift+X', () => {
+    const [width, height] = mainWindow.getContentSize()
+    if (width - speed > minSize) {
+      mainWindow.setSize(width - speed, height - speed)
+    }
+  })
 }
 
 // This method will be called when Electron has finished
@@ -48,9 +94,6 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
 
