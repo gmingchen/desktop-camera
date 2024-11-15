@@ -22,6 +22,7 @@ function createWindow(): void {
     transparent: true,
     alwaysOnTop: true,
     resizable: true,
+    icon: join(__dirname, '../../build/icon.ico'),
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -53,10 +54,10 @@ function createWindow(): void {
   // })
 
   const shortcuts = [
-    'Alt+CommandOrControl+Shift+Q', // 放大比例
-    'Alt+CommandOrControl+Shift+W', // 缩小比例
-    'Alt+CommandOrControl+Shift+A', // 反向切换形状
-    'Alt+CommandOrControl+Shift+S' // 正向切换形状
+    'Alt+CommandOrControl+Shift+=', // 放大比例
+    'Alt+CommandOrControl+Shift+-', // 缩小比例
+    'Alt+CommandOrControl+Shift+1', // 正向切换形状
+    'Alt+CommandOrControl+Shift+2' // 反向切换形状
   ]
   shortcuts.forEach((shortcut) => {
     globalShortcut.register(shortcut, () => {
@@ -66,18 +67,24 @@ function createWindow(): void {
 
   const speed = 10
   // 放大窗口
-  globalShortcut.register('Alt+CommandOrControl+Shift+Z', () => {
+  globalShortcut.register('Alt+CommandOrControl+Shift+4', () => {
     const [width, height] = mainWindow.getContentSize()
     if (width + speed <= maxSize) {
       mainWindow.setSize(width + speed, height + speed)
     }
   })
   // 缩小窗口
-  globalShortcut.register('Alt+CommandOrControl+Shift+X', () => {
+  globalShortcut.register('Alt+CommandOrControl+Shift+5', () => {
     const [width, height] = mainWindow.getContentSize()
     if (width - speed > minSize) {
       mainWindow.setSize(width - speed, height - speed)
     }
+  })
+  // 设置窗口是否置顶
+  globalShortcut.register('Alt+CommandOrControl+Shift+3', () => {
+    const value = !mainWindow.isAlwaysOnTop()
+    mainWindow.setAlwaysOnTop(value)
+    // mainWindow.setVisibleOnAllWorkspaces(value)
   })
 }
 

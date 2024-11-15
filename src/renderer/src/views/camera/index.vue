@@ -15,12 +15,12 @@ import Loading from '@components/loading/index.vue'
 const { ipcRenderer } = window.electron
 
 const scale = ref(1)
-ipcRenderer.on('Alt+CommandOrControl+Shift+Q', () => {
+ipcRenderer.on('Alt+CommandOrControl+Shift+=', () => {
   if (scale.value < 10) {
     scale.value += 0.01
   }
 })
-ipcRenderer.on('Alt+CommandOrControl+Shift+W', () => {
+ipcRenderer.on('Alt+CommandOrControl+Shift+-', () => {
   if (scale.value > 1) {
     scale.value -= 0.01
   }
@@ -28,18 +28,18 @@ ipcRenderer.on('Alt+CommandOrControl+Shift+W', () => {
 
 const types = ['', 'circle', 'quadrilateral', 'pentagon', 'hexagon', 'heptagon']
 const typeActive = ref(0)
-ipcRenderer.on('Alt+CommandOrControl+Shift+A', () => {
-  typeActive.value = typeActive.value ? typeActive.value - 1 : types.length - 1
-})
-ipcRenderer.on('Alt+CommandOrControl+Shift+S', () => {
+ipcRenderer.on('Alt+CommandOrControl+Shift+1', () => {
   typeActive.value = typeActive.value < types.length - 1 ? typeActive.value + 1 : 0
+})
+ipcRenderer.on('Alt+CommandOrControl+Shift+2', () => {
+  typeActive.value = typeActive.value ? typeActive.value - 1 : types.length - 1
 })
 
 const loading = ref(true)
 const style = computed(() => {
   const result = {
     transform: `scale(${scale.value})`,
-    'background-color': loading.value || errorMessage ? '#282828' : 'transparent'
+    'background-color': loading.value || errorMessage.value ? '#282828' : 'transparent'
   }
   return result
 })
